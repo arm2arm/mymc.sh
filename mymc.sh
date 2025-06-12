@@ -45,13 +45,13 @@ if [ -z "$SRC" ] || [ -z "$DST" ]; then
 fi
 
 # Add MinIO alias (idempotent)
-mc alias set "$MC_ALIAS" "$MC_HOST" "$MC_ACCESS_KEY" "$MC_SECRET_KEY" > /dev/null
+./mc alias set "$MC_ALIAS" "$MC_HOST" "$MC_ACCESS_KEY" "$MC_SECRET_KEY" > /dev/null
 
 # Determine direction: upload or download
 if [[ "$SRC" == s3:* ]]; then
     SRC_PATH="${SRC#s3:}"
-    mc cp --recursive "$MC_ALIAS/$SRC_PATH" "$DST"
+    ./mc cp --recursive "$MC_ALIAS/$SRC_PATH" "$DST"
 else
     DST_PATH="${DST#s3:}"
-    mc cp --recursive "$SRC" "$MC_ALIAS/$DST_PATH"
+    ./mc cp --recursive "$SRC" "$MC_ALIAS/$DST_PATH"
 fi
